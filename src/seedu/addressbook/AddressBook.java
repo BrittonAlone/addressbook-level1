@@ -109,6 +109,8 @@ public class AddressBook {
     private static final String COMMAND_FIND_DESC = "Finds all persons whose names contain any of the specified "
                                         + "keywords (case-sensitive) and displays them as a list with index numbers.";
     private static final String COMMAND_FIND_PARAMETERS = "KEYWORD [MORE_KEYWORDS]";
+    private static final String COMMAND_FIND_BY_PHONE_PARAMETERS = "PHONE NUMBER";
+    private static final String COMMAND_FIND_BY_EMAIL_PARAMETERS = "E-mail";
     private static final String COMMAND_FIND_EXAMPLE = COMMAND_FIND_WORD + " alice bob charlie";
 
     private static final String COMMAND_LIST_WORD = "list";
@@ -124,6 +126,15 @@ public class AddressBook {
     private static final String COMMAND_CLEAR_WORD = "clear";
     private static final String COMMAND_CLEAR_DESC = "Clears address book permanently.";
     private static final String COMMAND_CLEAR_EXAMPLE = COMMAND_CLEAR_WORD;
+
+
+    private static final String COMMAND_FIND_BY_EMAIL_WORD = "finde";
+    private static final String COMMAND_FIND_BY_EMAIL_DESC = "Find person with email";
+    private static final String COMMAND_FIND_BY_EMAIL_EXAMPLE = COMMAND_FIND_BY_EMAIL_WORD + " haha@gmail.com";
+
+    private static final String COMMAND_FIND_BY_PHONE_WORD = "findp";
+    private static final String COMMAND_FIND_BY_PHONE_DESC = "Find person with phone number";
+    private static final String COMMAND_FIND_BY_PHONE_EXAMPLE = COMMAND_FIND_BY_PHONE_WORD + " 12345678";
 
     private static final String COMMAND_HELP_WORD = "help";
     private static final String COMMAND_HELP_DESC = "Shows program usage instructions.";
@@ -373,6 +384,11 @@ public class AddressBook {
             return executeAddPerson(commandArgs);
         case COMMAND_FIND_WORD:
             return executeFindPersons(commandArgs);
+
+            case COMMAND_FIND_BY_PHONE_WORD:
+                return executeFindPersonsByPhone(commandArgs);
+            case COMMAND_FIND_BY_EMAIL_WORD:
+                return executeFindPersonsByEmail(commandArgs);
         case COMMAND_LIST_WORD:
             return executeListAllPersonsInAddressBook();
         case COMMAND_DELETE_WORD:
@@ -493,6 +509,49 @@ public class AddressBook {
         return matchedPersons;
     }
 
+    private static String executeFindPersonsByPhone(String commandArgs){
+        final String phone_number = extractPhoneFromCommandArgs(commandArgs);
+        final ArrayList<String[]> personsFound = getPersonsWithPhoneNumber(phone_number);
+        showToUser(personsFound);
+        return getMessageForPersonsDisplayedSummary(personsFound);
+    }
+
+    private static String extractPhoneFromCommandArgs(String commandArgs){
+        return commandArgs;
+    }
+
+    private static ArrayList<String[]> getPersonsWithPhoneNumber(String phone_number){
+        final ArrayList<String[]> matchedPersons = new ArrayList<>();
+        for(String[] person: getAllPersonsInAddressBook()){
+            final String info = getPhoneFromPerson(person);
+            if(info.equals(phone_number)){
+                matchedPersons.add(person);
+            }
+        }
+        return matchedPersons;
+    }
+
+    private static String executeFindPersonsByEmail(String commandArgs){
+        final String email = extractEmailFromCommandArgs(commandArgs);
+        final ArrayList<String[]> personsFound = getPersonsWithEmail(email);
+        showToUser(personsFound);
+        return getMessageForPersonsDisplayedSummary(personsFound);
+    }
+
+    private static String extractEmailFromCommandArgs(String commandArgs){
+        return commandArgs;
+    }
+
+    private static ArrayList<String[]> getPersonsWithEmail(String email){
+        final ArrayList<String[]> matchedPersons = new ArrayList<>();
+        for(String[] person: getAllPersonsInAddressBook()){
+            final String info = getEmailFromPerson(person);
+            if(info.equals(email)){
+                matchedPersons.add(person);
+            }
+        }
+        return matchedPersons;
+    }
     /**
      * Deletes person identified using last displayed index.
      *
@@ -1084,6 +1143,8 @@ public class AddressBook {
     private static String getUsageInfoForAllCommands() {
         return getUsageInfoForAddCommand() + LS
                 + getUsageInfoForFindCommand() + LS
+                + getUsageInfoForFindpCommand() + LS
+                + getUsageInfoForFindeCommand() + LS
                 + getUsageInfoForViewCommand() + LS
                 + getUsageInfoForDeleteCommand() + LS
                 + getUsageInfoForClearCommand() + LS
@@ -1104,7 +1165,18 @@ public class AddressBook {
                 + String.format(MESSAGE_COMMAND_HELP_PARAMETERS, COMMAND_FIND_PARAMETERS) + LS
                 + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_FIND_EXAMPLE) + LS;
     }
+    /** Retures the string for showing 'findp' command usage instruction */
+    private static String getUsageInfoForFindpCommand(){
+        return String.format(MESSAGE_COMMAND_HELP, COMMAND_FIND_BY_PHONE_WORD, COMMAND_FIND_BY_PHONE_DESC) + LS
+                + String.format(MESSAGE_COMMAND_HELP_PARAMETERS, COMMAND_FIND_BY_PHONE_PARAMETERS) + LS
+                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_FIND_BY_PHONE_EXAMPLE) + LS;
+    }
 
+    private static String getUsageInfoForFindeCommand(){
+        return String.format(MESSAGE_COMMAND_HELP, COMMAND_FIND_BY_EMAIL_WORD, COMMAND_FIND_BY_EMAIL_DESC) + LS
+                + String.format(MESSAGE_COMMAND_HELP_PARAMETERS, COMMAND_FIND_BY_EMAIL_PARAMETERS) + LS
+                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_FIND_BY_EMAIL_EXAMPLE) + LS;
+    }
     /** Returns the string for showing 'delete' command usage instruction */
     private static String getUsageInfoForDeleteCommand() {
         return String.format(MESSAGE_COMMAND_HELP, COMMAND_DELETE_WORD, COMMAND_DELETE_DESC) + LS
