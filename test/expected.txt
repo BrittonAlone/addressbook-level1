@@ -58,7 +58,15 @@
 || find: Finds all persons whose names contain any of the specified keywords (case-sensitive) and displays them as a list with index numbers.
 || 	Parameters: KEYWORD [MORE_KEYWORDS]
 || 	Example: find alice bob charlie
-|| 
+||
+|| findp: Find person with phone number
+|| 	Parameters: PHONE NUMBER
+|| 	Example: findp 12345678
+||
+|| finde: Find person with email
+|| 	Parameters: E-mail
+|| 	Example: finde haha@gmail.com
+||
 || list: Displays all persons as a list with index numbers.
 || 	Example: list
 || 
@@ -204,6 +212,54 @@
 || 
 || 2 persons found!
 || ===================================================
+|| Enter command: || [Command entered:  findp 000000]
+||
+|| 0 persons found!
+|| ===================================================
+|| Enter command: || [Command entered:  findp 111111]
+||  1. Adam Brown  Phone Number: 111111  Email: adam@gmail.com
+||
+|| 1 persons found!
+|| ===================================================
+|| Enter command: || [Command entered:  findp 222222]
+||  1. Betsy Choo  Phone Number: 222222  Email: benchoo@nus.edu.sg
+||
+|| 1 persons found!
+|| ===================================================
+|| Enter command: || [Command entered:  findp 333333]
+||  1. Charlie Dickson  Phone Number: 333333  Email: charlie.d@nus.edu.sg
+||
+|| 1 persons found!
+|| ===================================================
+|| Enter command: || [Command entered:  findp 444444]
+||  1. Dickson Ee  Phone Number: 444444  Email: dickson@nus.edu.sg
+||
+|| 1 persons found!
+|| ===================================================
+|| Enter command: || [Command entered:  finde nothing@nus.edu.sg]
+||
+|| 0 persons found!
+|| ===================================================
+|| Enter command: || [Command entered:  finde adam@gmail.com]
+||  1. Adam Brown  Phone Number: 111111  Email: adam@gmail.com
+||
+|| 1 persons found!
+|| ===================================================
+|| Enter command: || [Command entered:  finde benchoo@nus.edu.sg]
+||  1. Betsy Choo  Phone Number: 222222  Email: benchoo@nus.edu.sg
+||
+|| 1 persons found!
+|| ===================================================
+|| Enter command: || [Command entered:  finde charlie.d@nus.edu.sg]
+||  1. Charlie Dickson  Phone Number: 333333  Email: charlie.d@nus.edu.sg
+||
+|| 1 persons found!
+|| ===================================================
+|| Enter command: || [Command entered:  finde dickson@nus.edu.sg]
+||  1. Dickson Ee  Phone Number: 444444  Email: dickson@nus.edu.sg
+||
+|| 1 persons found!
+|| ==================================================
 || Enter command: || [Command entered:  delete]
 || Invalid command format: delete 
 || delete: Deletes a person identified by the index number used in the last find/list call.
